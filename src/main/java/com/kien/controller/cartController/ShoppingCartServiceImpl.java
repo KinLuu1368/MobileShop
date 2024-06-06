@@ -1,8 +1,11 @@
 package com.kien.controller.cartController;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kien.model.Item;
+import com.kien.dao.ProductDAO;
+import com.kien.model.CartItem;
+import com.kien.model.Product;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,21 +13,27 @@ import java.util.Map;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    private Map<Integer, Item> cartItems;
+	@Autowired
+	ProductDAO ProDao;
+	
+    private Map<Integer, CartItem> cartItems;
 
     public ShoppingCartServiceImpl() {
         cartItems = new HashMap<>();
     }
 
     @Override
-    public Item add(Integer id) {
-        Item item = cartItems.get(id);
+    public CartItem add(Integer id) {
+        CartItem item = cartItems.get(id);
         if (item != null) {
-            item.setQty(item.getQty() + 1);
+            item.setQuantity(item.getQuantity() + 1);
         } else {
-            // Thay thế bằng logic lấy thông tin mặt hàng từ nguồn dữ liệu (database, service, vv.)
-            item = new Item(id, "Item " + id, 0.0, 1);
+        	String idPro = String.valueOf(id);
+        	Product pro = ProDao.findByID(idPro);
+            item = new CartItem(pro.getId(),1,pro.getPrice(), pro.getName());
             cartItems.put(id, item);
+            System.out.println(idPro);
+            System.out.println(cartItems);
         }
         return item;
     }
@@ -35,10 +44,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Item update(Integer id, int qty) {
-        Item item = cartItems.get(id);
+    public CartItem update(Integer id, int qty) {
+        CartItem item = cartItems.get(id);
         if (item != null) {
-            item.setQty(qty);
+            item.setQuantity(qty);
         }
         return item;
     }
@@ -49,7 +58,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Collection<Item> getItems() {
+    public Collection<CartItem> getItems() {
         return cartItems.values();
     }
 
@@ -61,8 +70,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public double getAmount() {
         double totalAmount = 0.0;
-        for (Item item : cartItems.values()) {
-            totalAmount += item.getPrice() * item.getQty();
+        for (CartItem item : cartItems.values()) {
+            totalAmount += item.getPrice() * item.getQuantity();
         }
         return totalAmount;
     }

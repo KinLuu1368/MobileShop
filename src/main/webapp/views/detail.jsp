@@ -74,7 +74,7 @@
 								</a>
                             </div>
                             <div class="col-sm-5 mb-2">
-                            	<a href="/Assignment/Addtocart/${product.id}">
+                            	<a href="/cart/add/${product.id}">
 	                                <button class=" w-100 bg-transparent border-1 rounded-3 text-white h-100"
 	                                    style="border: 1px solid orange;">
 	                                    <h6 style="color: orange;" class="m-0 p-0"><span class="bi bi-bag-fill"></span></h6>

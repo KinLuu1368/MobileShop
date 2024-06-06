@@ -12,8 +12,9 @@ public class ShoppingCartController {
     @Autowired
     ShoppingCartService cart;
     
-    @RequestMapping("/cart/view")
+    @RequestMapping("/Assignment/cart")
     public String view(Model model) {
+    	System.out.println(cart);
         model.addAttribute("cart", cart);
         return "cart/index";
     }
@@ -21,24 +22,24 @@ public class ShoppingCartController {
     @RequestMapping("/cart/add/{id}")
     public String add(@PathVariable("id") Integer id) {
         cart.add(id);
-        return "redirect:/cart/view";
+        return "redirect:/Assignment/home";
     }
     
     @RequestMapping("/cart/remove/{id}")
     public String remove(@PathVariable("id") Integer id) {
         cart.remove(id);
-        return "redirect:/cart/view";
+        return "redirect:/Assignment/cart";
     }
     
     @RequestMapping("/cart/update/{id}")
     public String update(@PathVariable("id") Integer id, @RequestParam("qty") Integer qty) {
         cart.update(id, qty);
-        return "redirect:/cart/view";
+        return "redirect:/Assignment/cart";
     }
     
     @RequestMapping("/cart/clear")
     public String clear() {
         cart.clear();
-        return "redirect:/cart/view";
+        return "redirect:/Assignment/cart";
     }
 }

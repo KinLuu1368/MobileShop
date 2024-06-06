@@ -2,7 +2,7 @@ package com.kien.controller.cartController;
 
 import java.util.Collection;
 
-import com.kien.model.Item;
+import com.kien.model.CartItem;
 
 public interface ShoppingCartService {
 	/**
@@ -10,7 +10,7 @@ public interface ShoppingCartService {
 	* @param id là mã mặt hàng cần thêm
 	* @return mặt hàng đã được thêm vào hoặc cập nhật số lượng
 	*/
-	Item add(Integer id);
+	CartItem add(Integer id);
 	
 	/**
 	* Xóa mặt hàng khỏi giỏ
@@ -24,7 +24,7 @@ public interface ShoppingCartService {
 	* @param qty số lượng mới
 	* @return mặt hàng đã được thay đổi số lượng
 	*/
-	Item update(Integer id, int qty);
+	CartItem update(Integer id, int qty);
 	
 	/**
 	* Xóa sạch các mặt hàng trong giỏ
@@ -33,7 +33,7 @@ public interface ShoppingCartService {
 	/**
 	* Lấy tất cả các mặt hàng trong giỏ
 	*/
-	Collection<Item> getItems();
+	Collection<CartItem> getItems();
 	
 	/**
 	* Lấy tổng số lượng các mặt hàng trong giỏ
